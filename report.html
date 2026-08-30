@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Sailesh Pulukuri — Task Manager Assessment</title>
+  <style>
+    @page {
+      size: Letter;
+      margin: 0.65in 0.7in;
+    }
+
+    :root {
+      --ink: #0c1222;
+      --muted: #475569;
+      --line: #e2e8f0;
+      --teal: #0f766e;
+      --soft: #f8fafc;
+      --card: #ffffff;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      color: var(--ink);
+      font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+      font-size: 10.5pt;
+      line-height: 1.45;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .page {
+      page-break-after: always;
+      break-after: page;
+      min-height: 9.2in;
+      position: relative;
+      padding-bottom: 28px;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+      break-after: auto;
+    }
+
+    h1, h2, h3 { margin: 0 0 0.35em; line-height: 1.2; }
+    h1 { font-size: 26pt; letter-spacing: -0.03em; }
+    h2 {
+      font-size: 16pt;
+      color: var(--teal);
+      border-bottom: 2px solid var(--line);
+      padding-bottom: 0.3em;
+      margin-bottom: 0.7em;
+    }
+    h3 { font-size: 11.5pt; margin-top: 0.85em; margin-bottom: 0.35em; }
+    p { margin: 0 0 0.55em; }
+    a { color: var(--teal); text-decoration: none; font-weight: 600; }
+    ul, ol { margin: 0 0 0.65em; padding-left: 1.2em; }
+    li { margin-bottom: 0.28em; }
+
+    .eyebrow {
+      font-size: 8.5pt;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 10px;
+    }
+
+    .hero {
+      border: 1px solid var(--line);
+      background: linear-gradient(135deg, #f0fdfa 0%, #f8fafc 55%, #eff6ff 100%);
+      border-radius: 14px;
+      padding: 28px 26px;
+      margin-bottom: 18px;
+    }
+
+    .subtitle {
+      font-size: 12pt;
+      color: var(--muted);
+      max-width: 34em;
+      margin-top: 8px;
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .meta-card, .info-card, .shot-card, .tech-card {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--card);
+      padding: 14px 16px;
+    }
+
+    .meta-card .label, .shot-card .caption-label {
+      font-size: 8pt;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 6px;
+    }
+
+    .meta-card .value {
+      font-size: 11pt;
+      font-weight: 700;
+      word-break: break-all;
+    }
+
+    .meta-card a { font-size: 10pt; word-break: break-all; }
+
+    .checklist {
+      margin-top: 18px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 14px 16px;
+      background: #fff;
+    }
+
+    .checklist h3 { margin-top: 0; color: var(--ink); }
+
+    .footer-note {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      font-size: 8pt;
+      color: var(--muted);
+      border-top: 1px solid var(--line);
+      padding-top: 8px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .info-card h3 { margin-top: 0; }
+    .info-card ul { margin-bottom: 0; }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 10px 0 14px;
+    }
+
+    .badge {
+      border: 1px solid #99f6e4;
+      background: #ecfdf5;
+      color: #0f766e;
+      border-radius: 999px;
+      padding: 4px 10px;
+      font-size: 8.5pt;
+      font-weight: 700;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0.35em 0 0.8em;
+      font-size: 9.3pt;
+    }
+
+    th, td {
+      border: 1px solid var(--line);
+      padding: 7px 8px;
+      text-align: left;
+      vertical-align: top;
+    }
+
+    th {
+      background: var(--soft);
+      font-size: 8pt;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .shot {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 6px;
+      background: #f1f5f9;
+    }
+
+    .shot-sm { max-height: 2.55in; object-fit: cover; object-position: top; }
+    .shot-md { max-height: 3.1in; object-fit: cover; object-position: top; }
+    .shot-db { max-height: 3.4in; object-fit: contain; object-position: top; background: #111; }
+
+    .shot-card p {
+      margin: 0;
+      font-size: 9pt;
+      color: var(--muted);
+    }
+
+    .shots-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    .shots-pair {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 12px;
+    }
+
+    .note {
+      background: #ecfdf5;
+      border: 1px solid #99f6e4;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 9.5pt;
+      margin: 0.55em 0;
+    }
+
+    .warn {
+      background: #fff7ed;
+      border: 1px solid #fed7aa;
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 9.5pt;
+      margin: 0.55em 0;
+    }
+
+    pre {
+      background: #0c1222;
+      color: #e2e8f0;
+      border-radius: 8px;
+      padding: 11px 12px;
+      font-size: 7.8pt;
+      line-height: 1.35;
+      white-space: pre-wrap;
+      word-break: break-word;
+      margin: 0.4em 0 0.7em;
+    }
+
+    code, .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      font-size: 8.8pt;
+    }
+
+    .tech-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 10px;
+      margin-bottom: 12px;
+    }
+
+    .tech-card h3 { margin-top: 0; font-size: 10.5pt; }
+    .tech-card p { margin: 0; font-size: 9.3pt; color: var(--muted); }
+
+    .flow {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr auto 1fr;
+      gap: 8px;
+      align-items: center;
+      margin: 12px 0 16px;
+    }
+
+    .flow .box {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 12px;
+      text-align: center;
+      background: var(--soft);
+      font-size: 9.5pt;
+      font-weight: 700;
+    }
+
+    .flow .arrow {
+      color: var(--teal);
+      font-weight: 700;
+      font-size: 14pt;
+    }
+
+    .compact li { margin-bottom: 0.18em; }
+  </style>
+</head>
+<body>
+
+  <!-- PAGE 1: Title + links -->
+  <section class="page">
+    <div class="eyebrow">Next Play Games · Software Development Internship Assessment</div>
+    <div class="hero">
+      <h1>Flowboard</h1>
+      <p class="subtitle">
+        A polished Kanban task board with guest authentication, drag-and-drop status updates,
+        and collaboration features — built for the Next Play Games internship challenge.
+      </p>
+      <div class="badge-row">
+        <span class="badge">React + TypeScript</span>
+        <span class="badge">Supabase Auth + RLS</span>
+        <span class="badge">Vite + Tailwind</span>
+        <span class="badge">Deployed on Vercel</span>
+      </div>
+      <p style="margin:0; color:var(--muted); font-size:10pt;">
+        <strong style="color:var(--ink)">Candidate:</strong> Sailesh Pulukuri
+        &nbsp;·&nbsp;
+        <strong style="color:var(--ink)">Document:</strong> sailesh_pulukuri_task_manager_assessment.pdf
+      </p>
+    </div>
+
+    <div class="meta-grid">
+      <div class="meta-card">
+        <div class="label">Live demo</div>
+        <a href="https://kanban-board-pi-drab.vercel.app/">https://kanban-board-pi-drab.vercel.app/</a>
+        <p style="margin:8px 0 0; color:var(--muted); font-size:9pt;">
+          Hosted on Vercel. Opens with an anonymous guest session and persists tasks in Supabase.
+        </p>
+      </div>
+      <div class="meta-card">
+        <div class="label">GitHub repository</div>
+        <a href="https://github.com/saileshpulukuri/kanban-board">https://github.com/saileshpulukuri/kanban-board</a>
+        <p style="margin:8px 0 0; color:var(--muted); font-size:9pt;">
+          Public source code, schema SQL, README, and setup instructions.
+        </p>
+      </div>
+    </div>
+
+    <div class="checklist">
+      <h3>Submission checklist</h3>
+      <div class="two-col">
+        <ul class="compact">
+          <li>Kanban board with To Do / In Progress / In Review / Done</li>
+          <li>Drag-and-drop status updates</li>
+          <li>Create / edit / delete tasks</li>
+          <li>Guest accounts (Supabase anonymous auth)</li>
+          <li>Row Level Security enabled</li>
+        </ul>
+        <ul class="compact">
+          <li>Live hosted frontend (Vercel)</li>
+          <li>GitHub repository shared</li>
+          <li>Full database schema included</li>
+          <li>Advanced features (team, labels, comments, activity, filters, stats)</li>
+          <li>Design-focused UI inspired by Linear / Asana</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment</span>
+      <span>Page 1</span>
+    </div>
+  </section>
+
+  <!-- PAGE 2: Overview -->
+  <section class="page">
+    <h2>Project Overview</h2>
+    <p>
+      Flowboard is a full-stack Kanban task manager where users can create work items, move them across
+      board columns, assign teammates, attach labels, leave comments, and track activity — all behind a
+      guest session so each visitor only sees their own data.
+    </p>
+
+    <div class="two-col">
+      <div class="info-card">
+        <h3>Problem &amp; goal</h3>
+        <p style="margin:0; color:var(--muted); font-size:9.5pt;">
+          Build a board that feels production-ready — not a generic todo list. Design quality was treated
+          as a first-class requirement: clear hierarchy, intentional typography/color, smooth drag interactions,
+          and thoughtful empty / loading / error states.
+        </p>
+      </div>
+      <div class="info-card">
+        <h3>Core user flow</h3>
+        <ol class="compact" style="margin:0; color:var(--muted); font-size:9.5pt;">
+          <li>App launches and creates an anonymous guest session</li>
+          <li>User creates tasks with priority, due date, assignee, labels</li>
+          <li>Tasks are dragged between columns to update status</li>
+          <li>Detail drawer supports edits, comments, and activity history</li>
+        </ol>
+      </div>
+    </div>
+
+    <h3>Design decisions</h3>
+    <ul>
+      <li><strong>Brand-first UI:</strong> “Flowboard” is the primary visual signal in the header (Instrument Serif + Sora).</li>
+      <li><strong>Palette:</strong> cool slate neutrals with a teal accent — calm and professional rather than a generic purple theme.</li>
+      <li><strong>Hierarchy:</strong> sidebar for team/labels/stats; main canvas reserved for the four-column board.</li>
+      <li><strong>Cards:</strong> priority pills, due-soon / overdue indicators, and assignee avatars without clutter.</li>
+      <li><strong>Motion:</strong> staggered column entrance, elevated drag overlay, and a sliding task detail drawer.</li>
+    </ul>
+
+    <h3>Required functionality delivered</h3>
+    <table>
+      <thead>
+        <tr><th>Requirement</th><th>Implementation</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Kanban columns</td>
+          <td>To Do, In Progress, In Review, Done with empty states and counts</td>
+        </tr>
+        <tr>
+          <td>Drag &amp; drop</td>
+          <td>@dnd-kit; status updates optimistically, then persisted to Supabase</td>
+        </tr>
+        <tr>
+          <td>Task create/edit</td>
+          <td>Modal + detail drawer for title, description, priority, due date, assignee, labels</td>
+        </tr>
+        <tr>
+          <td>Guest accounts</td>
+          <td>Supabase anonymous sign-in on first launch; <span class="mono">user_id</span> on every owned row</td>
+        </tr>
+        <tr>
+          <td>Persistence + security</td>
+          <td>Postgres tables with RLS policies; only public anon/publishable key in frontend</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Advanced features included</h3>
+    <div class="two-col">
+      <ul class="compact">
+        <li>Team members &amp; assignees (avatars on cards)</li>
+        <li>Task comments (separate <span class="mono">comments</span> table)</li>
+        <li>Activity log timeline in task detail</li>
+        <li>Custom labels + multi-label assignment</li>
+      </ul>
+      <ul class="compact">
+        <li>Due date urgency badges (soon / overdue)</li>
+        <li>Search + priority / assignee / label filters</li>
+        <li>Board pulse stats + completion progress</li>
+        <li>Loading skeletons and error/empty states</li>
+      </ul>
+    </div>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment</span>
+      <span>Page 2</span>
+    </div>
+  </section>
+
+  <!-- PAGE 3: Screenshots -->
+  <section class="page">
+    <h2>Product Screenshots</h2>
+    <p style="color:var(--muted); margin-bottom:12px;">
+      Live production UI on Vercel and the corresponding Supabase <span class="mono">tasks</span> table in the dashboard.
+    </p>
+
+    <div class="shots-grid">
+      <div class="shot-card">
+        <div class="caption-label">Figure 1 · Kanban dashboard</div>
+        <img class="shot shot-md" src="submission-assets/dashboard.png" alt="Flowboard Kanban dashboard" />
+        <p>
+          Main board with Board Pulse stats, team roster, search/filters, and four columns.
+          Cards show priority, due urgency, and assignee avatars.
+        </p>
+      </div>
+
+      <div class="shots-pair">
+        <div class="shot-card">
+          <div class="caption-label">Figure 2 · Task detail drawer</div>
+          <img class="shot shot-sm" src="submission-assets/task-detail.png" alt="Task detail drawer" />
+          <p>
+            Side drawer for editing status/priority/due date/assignee, plus Comments and Activity tabs,
+            delete, and save actions.
+          </p>
+        </div>
+        <div class="shot-card">
+          <div class="caption-label">Figure 3 · Supabase tasks table</div>
+          <img class="shot shot-db" src="submission-assets/supabase-tasks.png" alt="Supabase tasks table" />
+          <p>
+            Backend persistence in Supabase Table Editor. Related tables:
+            <span class="mono">team_members</span>, <span class="mono">labels</span>,
+            <span class="mono">task_labels</span>, <span class="mono">comments</span>,
+            <span class="mono">activity_log</span>. RLS policy active on <span class="mono">tasks</span>.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment</span>
+      <span>Page 3</span>
+    </div>
+  </section>
+
+  <!-- PAGE 4: Architecture -->
+  <section class="page">
+    <h2>Architecture &amp; Technologies</h2>
+
+    <div class="flow">
+      <div class="box">React Frontend<br/><span style="font-weight:500;color:#64748b;font-size:8.5pt;">Vite · TypeScript · Tailwind</span></div>
+      <div class="arrow">→</div>
+      <div class="box">Supabase Client<br/><span style="font-weight:500;color:#64748b;font-size:8.5pt;">Anon key only</span></div>
+      <div class="arrow">→</div>
+      <div class="box">Postgres + Auth<br/><span style="font-weight:500;color:#64748b;font-size:8.5pt;">RLS · Anonymous users</span></div>
+    </div>
+
+    <div class="tech-grid">
+      <div class="tech-card">
+        <h3>Frontend</h3>
+        <p>React 19, TypeScript, Vite, Tailwind CSS v4, Lucide icons, date-fns</p>
+      </div>
+      <div class="tech-card">
+        <h3>Interactions</h3>
+        <p>@dnd-kit for accessible drag-and-drop across columns with optimistic updates</p>
+      </div>
+      <div class="tech-card">
+        <h3>Backend / Data</h3>
+        <p>Supabase Auth (anonymous), Postgres tables, RLS policies, no custom API required</p>
+      </div>
+      <div class="tech-card">
+        <h3>Hosting</h3>
+        <p>Vercel for the SPA; env vars for <span class="mono">VITE_SUPABASE_URL</span> + anon key</p>
+      </div>
+      <div class="tech-card">
+        <h3>Version control</h3>
+        <p>GitHub public repository with schema SQL and README setup guide</p>
+      </div>
+      <div class="tech-card">
+        <h3>Security model</h3>
+        <p>Guest isolation via <span class="mono">auth.uid()</span>; service role key never shipped to the client</p>
+      </div>
+    </div>
+
+    <h3>Why this architecture</h3>
+    <ul>
+      <li><strong>Speed + free tier:</strong> Calling Supabase directly from the frontend keeps the stack simple and $0.</li>
+      <li><strong>Security by default:</strong> RLS enforces ownership even if the client is modified.</li>
+      <li><strong>Clear ownership:</strong> every task/member/label/comment/activity row is tied to the guest <span class="mono">user_id</span>.</li>
+      <li><strong>Deploy simplicity:</strong> static Vite build on Vercel with two public environment variables.</li>
+    </ul>
+
+    <h3>Key frontend modules</h3>
+    <table>
+      <thead>
+        <tr><th>Area</th><th>Responsibility</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="mono">src/components/Board.tsx</span></td><td>Column layout + drag/drop orchestration</td></tr>
+        <tr><td><span class="mono">src/hooks/useBoard.tsx</span></td><td>Shared board state, filters, stats, CRUD actions</td></tr>
+        <tr><td><span class="mono">src/lib/api.ts</span></td><td>Supabase reads/writes for tasks, members, labels, comments, activity</td></tr>
+        <tr><td><span class="mono">supabase/schema.sql</span></td><td>Tables, indexes, triggers, and RLS policies</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      <strong>Guest behavior:</strong> User A and User B each receive separate anonymous sessions.
+      Because RLS filters by <span class="mono">auth.uid()</span>, their boards never leak into each other.
+    </div>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment</span>
+      <span>Page 4</span>
+    </div>
+  </section>
+
+  <!-- PAGE 5: Schema & Security -->
+  <section class="page">
+    <h2>Database Schema &amp; Security</h2>
+    <p>
+      Schema lives in <span class="mono">supabase/schema.sql</span>. Anonymous sign-in must be enabled under
+      Authentication → Providers → Anonymous.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Table</th><th>Purpose / key fields</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="mono">tasks</span></td>
+          <td>
+            Core work items:
+            <span class="mono">id, user_id, title, description, status, priority, due_date, assignee_id, position, created_at, updated_at</span>.
+            Status values: <span class="mono">todo | in_progress | in_review | done</span>.
+          </td>
+        </tr>
+        <tr>
+          <td><span class="mono">team_members</span></td>
+          <td>Per-guest roster: <span class="mono">name, color, avatar_url</span> for assignees.</td>
+        </tr>
+        <tr>
+          <td><span class="mono">labels</span> / <span class="mono">task_labels</span></td>
+          <td>Custom tags and many-to-many assignment to tasks.</td>
+        </tr>
+        <tr>
+          <td><span class="mono">comments</span></td>
+          <td>Chronological discussion thread per task.</td>
+        </tr>
+        <tr>
+          <td><span class="mono">activity_log</span></td>
+          <td>Timeline events (created, status moved, assigned, commented, updated).</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Row Level Security</h3>
+    <ul class="compact">
+      <li>RLS enabled on all application tables</li>
+      <li>Policies allow access only when <span class="mono">auth.uid() = user_id</span></li>
+      <li><span class="mono">task_labels</span> is authorized through ownership of the parent task</li>
+      <li>Frontend uses only the public anon/publishable key — never the service role key</li>
+    </ul>
+
+    <div class="warn">
+      <strong>Security note:</strong> <span class="mono">.env</span> is gitignored. Vercel stores
+      <span class="mono">VITE_SUPABASE_URL</span> and the public key as environment variables.
+      The service role key is not used anywhere in this app.
+    </div>
+
+    <h3>Representative SQL (tasks + RLS)</h3>
+    <pre>create table public.tasks (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid not null references auth.users(id) on delete cascade,
+  title text not null,
+  description text,
+  status text not null default 'todo'
+    check (status in ('todo', 'in_progress', 'in_review', 'done')),
+  priority text not null default 'normal'
+    check (priority in ('low', 'normal', 'high')),
+  due_date date,
+  assignee_id uuid references public.team_members(id) on delete set null,
+  position integer not null default 0,
+  created_at timestamptz not null default now(),
+  updated_at timestamptz not null default now()
+);
+
+alter table public.tasks enable row level security;
+
+create policy "Users manage own tasks"
+  on public.tasks for all
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);</pre>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment</span>
+      <span>Page 5</span>
+    </div>
+  </section>
+
+  <!-- PAGE 6: Setup + Future -->
+  <section class="page">
+    <h2>Setup Instructions &amp; Future Improvements</h2>
+
+    <h3>Run locally</h3>
+    <pre>git clone https://github.com/saileshpulukuri/kanban-board.git
+cd kanban-board
+npm install
+cp .env.example .env
+# Set VITE_SUPABASE_URL and VITE_SUPABASE_ANON_KEY
+npm run dev</pre>
+
+    <h3>Supabase + deploy</h3>
+    <ol>
+      <li>Create a free Supabase project and run <span class="mono">supabase/schema.sql</span> in the SQL Editor.</li>
+      <li>Enable <strong>Authentication → Providers → Anonymous</strong>.</li>
+      <li>Copy Project URL + anon/publishable key into local <span class="mono">.env</span>.</li>
+      <li>In Vercel, set the same two environment variables and redeploy.</li>
+      <li>Open the live URL — a guest session is created automatically on first load.</li>
+    </ol>
+
+    <div class="two-col">
+      <div class="info-card">
+        <h3>Useful commands</h3>
+        <ul class="compact" style="margin:0;">
+          <li><span class="mono">npm run dev</span> — local development</li>
+          <li><span class="mono">npm run build</span> — production build</li>
+          <li><span class="mono">npm run preview</span> — preview build</li>
+        </ul>
+      </div>
+      <div class="info-card">
+        <h3>Links</h3>
+        <ul class="compact" style="margin:0;">
+          <li><a href="https://kanban-board-pi-drab.vercel.app/">Live app</a></li>
+          <li><a href="https://github.com/saileshpulukuri/kanban-board">GitHub repo</a></li>
+          <li>Schema: <span class="mono">supabase/schema.sql</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Tradeoffs &amp; what I’d improve next</h3>
+    <ul>
+      <li><strong>Realtime sync:</strong> Supabase Realtime so multiple tabs stay in sync without refresh.</li>
+      <li><strong>Stronger reorder writes:</strong> batch column position updates in a single RPC/transaction.</li>
+      <li><strong>Accessibility:</strong> deeper keyboard reordering and screen-reader announcements for drag results.</li>
+      <li><strong>Shared workspaces:</strong> optional multi-user boards beyond per-guest isolation.</li>
+      <li><strong>Onboarding:</strong> richer empty-state guidance for brand-new guest accounts.</li>
+    </ul>
+
+    <h3>Evaluation summary</h3>
+    <table>
+      <thead>
+        <tr><th>Criteria</th><th>Evidence</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Design quality</td><td>Intentional typography, teal/slate system, polished cards &amp; drawer</td></tr>
+        <tr><td>Board functionality</td><td>4 columns, drag-and-drop, create/edit/delete</td></tr>
+        <tr><td>Persistence &amp; security</td><td>Supabase schema + anonymous auth + RLS</td></tr>
+        <tr><td>Advanced features</td><td>Team, labels, comments, activity, filters, due urgency, stats</td></tr>
+        <tr><td>Live execution</td><td>Deployed at the Vercel URL above</td></tr>
+      </tbody>
+    </table>
+
+    <div class="note">
+      Thank you for reviewing Flowboard. The live demo and repository contain everything needed to
+      verify functionality, schema, and design quality end-to-end.
+    </div>
+
+    <div class="footer-note">
+      <span>Flowboard · Internship Assessment · Sailesh Pulukuri</span>
+      <span>Page 6</span>
+    </div>
+  </section>
+
+</body>
+</html>
